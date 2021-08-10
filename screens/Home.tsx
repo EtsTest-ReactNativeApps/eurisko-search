@@ -1,13 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import {
-  Button,
-  FlatList,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
 import { NavigationStackProp } from 'react-navigation-stack';
 import ListItem from '../components/ListItem';
 
