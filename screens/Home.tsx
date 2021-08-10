@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, CancelTokenSource } from 'axios';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
@@ -8,28 +8,47 @@ import { Data, LocalData } from '../typeScriptInterfaces/interfaces';
 
 const Home = ({ navigation }: { navigation: NavigationStackProp }) => {
   const [text, setText] = useState('');
-
+  const [page, setPage] = useState(0);
   const [LocalData, setLocalData] = useState<LocalData>([]);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data }: AxiosResponse<Data> = await axios.get(
-          'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=Iraq&api-key=OAD0Qz0csaoDZLpw5ZR74TCeSjynnabJ&page=0',
-        );
-        setLocalData([...data.response.docs]);
-      } catch (error) {}
-    })();
+  const fetchTwoRequests = () => {
+    console.log('triggered');
+    const url1 = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${text}&api-key=OAD0Qz0csaoDZLpw5ZR74TCeSjynnabJ&page=${page}`;
+    const url2 = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${text}&api-key=OAD0Qz0csaoDZLpw5ZR74TCeSjynnabJ&page=${
+      page + 1
+    }`;
 
-    (async () => {
-      try {
-        const { data }: AxiosResponse<Data> = await axios.get(
-          'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=Iraq&api-key=OAD0Qz0csaoDZLpw5ZR74TCeSjynnabJ&page=1',
-        );
-        setLocalData(prevData => [...prevData, ...data.response.docs]);
-      } catch (error) {}
-    })();
-  }, []);
+    const cancelToken1 = axios.CancelToken.source();
+    const cancelToken2 = axios.CancelToken.source();
+
+    const requestOne = axios.get(url1, { cancelToken: cancelToken1.token });
+    const requestTwo = axios.get(url2, { cancelToken: cancelToken2.token });
+
+    axios
+      .all([requestOne, requestTwo])
+      .then(
+        axios.spread((...responses) => {
+          const responseOne = responses[0].data.response.docs;
+          const responseTwo = responses[1].data.response.docs;
+
+          setLocalData([...responseOne, ...responseTwo]);
+        }),
+      )
+      .catch(err => {
+        if (axios.isCancel(err)) return;
+      });
+
+    return { cancelToken1, cancelToken2 };
+  };
+
+  useEffect(() => {
+    const { cancelToken1, cancelToken2 } = fetchTwoRequests();
+
+    return () => {
+      cancelToken1.cancel();
+      cancelToken2.cancel();
+    };
+  }, [text]);
 
   return (
     <View style={styles.container}>
