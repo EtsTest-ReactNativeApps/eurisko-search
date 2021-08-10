@@ -3,8 +3,9 @@ import { Text, TouchableOpacity } from 'react-native';
 import { NavigationStackProp } from 'react-navigation-stack';
 
 interface Item {
-  id: string;
-  title: string;
+  _id: string;
+  lead_paragraph: string;
+  headline: { main: string };
 }
 
 const ListItem = ({
@@ -20,7 +21,7 @@ const ListItem = ({
 
   return (
     <TouchableOpacity onPress={pressHandler}>
-      <Text>{item.title}</Text>
+      <Text>{item['lead_paragraph']}</Text>
     </TouchableOpacity>
   );
 };

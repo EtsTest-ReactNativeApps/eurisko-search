@@ -1,4 +1,5 @@
-import React from 'react';
+import axios, { AxiosResponse } from 'axios';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
 import { NavigationStackProp } from 'react-navigation-stack';
@@ -7,20 +8,40 @@ import ListItem from '../components/ListItem';
 const Home = ({ navigation }: { navigation: NavigationStackProp }) => {
   const [text, setText] = useState('');
 
-  const data = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'First Item',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Second Item',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-  ];
+  interface LocalData
+    extends Array<{
+      _id: string;
+      lead_paragraph: string;
+      headline: { main: string };
+    }> {}
+
+  const [LocalData, setLocalData] = useState<LocalData>([]);
+
+  interface Data {
+    response: {
+      docs: [];
+    };
+  }
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data }: AxiosResponse<Data> = await axios.get(
+          'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=Iraq&api-key=OAD0Qz0csaoDZLpw5ZR74TCeSjynnabJ&page=0',
+        );
+        setLocalData([...data.response.docs]);
+      } catch (error) {}
+    })();
+
+    (async () => {
+      try {
+        const { data }: AxiosResponse<Data> = await axios.get(
+          'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=Iraq&api-key=OAD0Qz0csaoDZLpw5ZR74TCeSjynnabJ&page=1',
+        );
+        setLocalData(prevData => [...prevData, ...data.response.docs]);
+      } catch (error) {}
+    })();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -31,11 +52,11 @@ const Home = ({ navigation }: { navigation: NavigationStackProp }) => {
         placeholder="Search"
       />
       <FlatList
-        data={data}
+        data={LocalData}
         renderItem={({ item }) => (
           <ListItem item={item} navigation={navigation} />
         )}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item['_id']}
       />
     </View>
   );
