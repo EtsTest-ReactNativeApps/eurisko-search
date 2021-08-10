@@ -4,24 +4,12 @@ import { useState } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
 import { NavigationStackProp } from 'react-navigation-stack';
 import ListItem from '../components/ListItem';
+import { Data, LocalData } from '../typeScriptInterfaces/interfaces';
 
 const Home = ({ navigation }: { navigation: NavigationStackProp }) => {
   const [text, setText] = useState('');
 
-  interface LocalData
-    extends Array<{
-      _id: string;
-      lead_paragraph: string;
-      headline: { main: string };
-    }> {}
-
   const [LocalData, setLocalData] = useState<LocalData>([]);
-
-  interface Data {
-    response: {
-      docs: [];
-    };
-  }
 
   useEffect(() => {
     (async () => {
