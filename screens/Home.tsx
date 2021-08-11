@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableHighlight,
   View,
 } from 'react-native';
 import { NavigationStackProp } from 'react-navigation-stack';
@@ -36,7 +37,6 @@ const Home = ({ navigation }: { navigation: NavigationStackProp }) => {
           const responseOne = responses[0].data.response.docs;
           const responseTwo = responses[1].data.response.docs;
 
-          console.log(page);
           if (page === 0) {
             setLocalData([...responseOne, ...responseTwo]);
           } else {
@@ -65,7 +65,14 @@ const Home = ({ navigation }: { navigation: NavigationStackProp }) => {
         value={text}
         placeholder="Search"
       />
-      <Button title="Search" onPress={() => setPage(0)} />
+      <TouchableHighlight style={styles.button}>
+        <Button
+          title="Search"
+          onPress={() => setPage(prevPage => prevPage + 1 - 1)}
+          disabled={page ? false : true}
+          color="#fff"
+        />
+      </TouchableHighlight>
       <FlatList
         style={styles.list}
         data={localData}
@@ -93,7 +100,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   list: {
-    marginTop: 20,
+    marginTop: 10,
+  },
+  button: {
+    marginTop: 10,
+    borderRadius: 4,
+    backgroundColor: '#3f51b5',
+    width: '95%',
+    height: 50,
+    justifyContent: 'center',
   },
 });
 
