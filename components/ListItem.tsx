@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { NavigationStackProp } from 'react-navigation-stack';
 import { Item } from '../typeScriptInterfaces/interfaces';
 
@@ -15,10 +15,16 @@ const ListItem = ({
   };
 
   return (
-    <TouchableOpacity onPress={pressHandler}>
+    <TouchableOpacity style={styles.item} onPress={pressHandler}>
       <Text>{item['lead_paragraph']}</Text>
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  item: {
+    marginTop: 20,
+  },
+});
 
 export default ListItem;

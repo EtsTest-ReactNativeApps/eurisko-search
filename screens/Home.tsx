@@ -1,28 +1,33 @@
-import axios, { AxiosResponse, CancelTokenSource } from 'axios';
+import axios from 'axios';
+import 'react-native-get-random-values';
+import { nanoid } from 'nanoid';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  Button,
+  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import { NavigationStackProp } from 'react-navigation-stack';
 import ListItem from '../components/ListItem';
-import { Data, LocalData } from '../typeScriptInterfaces/interfaces';
+import { LocalData } from '../typeScriptInterfaces/interfaces';
 
 const Home = ({ navigation }: { navigation: NavigationStackProp }) => {
   const [text, setText] = useState('');
   const [page, setPage] = useState(0);
-  const [LocalData, setLocalData] = useState<LocalData>([]);
+  const [localData, setLocalData] = useState<LocalData>([]);
 
   const fetchTwoRequests = () => {
-    console.log('triggered');
     const url1 = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${text}&api-key=OAD0Qz0csaoDZLpw5ZR74TCeSjynnabJ&page=${page}`;
     const url2 = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${text}&api-key=OAD0Qz0csaoDZLpw5ZR74TCeSjynnabJ&page=${
       page + 1
     }`;
 
-    const cancelToken1 = axios.CancelToken.source();
-    const cancelToken2 = axios.CancelToken.source();
-
-    const requestOne = axios.get(url1, { cancelToken: cancelToken1.token });
-    const requestTwo = axios.get(url2, { cancelToken: cancelToken2.token });
+    const requestOne = axios.get(url1);
+    const requestTwo = axios.get(url2);
 
     axios
       .all([requestOne, requestTwo])
@@ -31,24 +36,26 @@ const Home = ({ navigation }: { navigation: NavigationStackProp }) => {
           const responseOne = responses[0].data.response.docs;
           const responseTwo = responses[1].data.response.docs;
 
-          setLocalData([...responseOne, ...responseTwo]);
+          console.log(page);
+          if (page === 0) {
+            setLocalData([...responseOne, ...responseTwo]);
+          } else {
+            setLocalData(prevData => [
+              ...prevData,
+              ...responseOne,
+              ...responseTwo,
+            ]);
+          }
         }),
       )
       .catch(err => {
         if (axios.isCancel(err)) return;
       });
-
-    return { cancelToken1, cancelToken2 };
   };
 
   useEffect(() => {
-    const { cancelToken1, cancelToken2 } = fetchTwoRequests();
-
-    return () => {
-      cancelToken1.cancel();
-      cancelToken2.cancel();
-    };
-  }, [text]);
+    fetchTwoRequests();
+  }, [page]);
 
   return (
     <View style={styles.container}>
@@ -58,12 +65,15 @@ const Home = ({ navigation }: { navigation: NavigationStackProp }) => {
         value={text}
         placeholder="Search"
       />
+      <Button title="Search" onPress={() => setPage(0)} />
       <FlatList
-        data={LocalData}
+        style={styles.list}
+        data={localData}
         renderItem={({ item }) => (
           <ListItem item={item} navigation={navigation} />
         )}
-        keyExtractor={item => item['_id']}
+        keyExtractor={() => nanoid()}
+        onEndReached={() => setPage(prevPage => prevPage + 2)}
       />
     </View>
   );
@@ -81,6 +91,9 @@ const styles = StyleSheet.create({
     padding: 18,
     borderWidth: 1,
     backgroundColor: '#fff',
+  },
+  list: {
+    marginTop: 20,
   },
 });
 
