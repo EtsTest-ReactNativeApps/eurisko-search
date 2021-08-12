@@ -14,6 +14,7 @@ import {
 import { NavigationStackProp } from 'react-navigation-stack';
 import ListItem from '../components/ListItem';
 import { LocalData } from '../typeScriptInterfaces/interfaces';
+import CustomFlatList from '../components/CustomFlatList';
 
 const Home = ({ navigation }: { navigation: NavigationStackProp }) => {
   const [text, setText] = useState('');
@@ -72,14 +73,10 @@ const Home = ({ navigation }: { navigation: NavigationStackProp }) => {
           color="#fff"
         />
       </TouchableHighlight>
-      <FlatList
-        style={styles.list}
-        data={localData}
-        renderItem={({ item }) => (
-          <ListItem item={item} navigation={navigation} />
-        )}
-        keyExtractor={() => nanoid()}
-        onEndReached={() => setPage(prevPage => prevPage + 2)}
+      <CustomFlatList
+        setPage={setPage}
+        localData={localData}
+        navigation={navigation}
       />
     </View>
   );
@@ -97,9 +94,6 @@ const styles = StyleSheet.create({
     padding: 18,
     borderWidth: 1,
     backgroundColor: '#fff',
-  },
-  list: {
-    marginTop: 10,
   },
   button: {
     marginTop: 10,
