@@ -10,8 +10,19 @@ const ListItem = ({
   item: Item;
   navigation: NavigationStackProp;
 }) => {
+  // If there's a photo, then show it, if not, fallback to another one.
+  const imageUrl = !!item.multimedia[0]?.url
+    ? `https://static01.nyt.com/${item.multimedia[0].url}`
+    : 'https://icons-for-free.com/iconfiles/png/512/gallery+image+landscape+mobile+museum+open+line+icon-1320183049020185924.png';
+
   const pressHandler = () => {
-    navigation.navigate('Details');
+    navigation.navigate('Details', {
+      imageUrl,
+      title: item.headline.main,
+      category: item['type_of_material'],
+      link: item['web_url'],
+      description: item['lead_paragraph'],
+    });
   };
 
   return (
@@ -20,8 +31,10 @@ const ListItem = ({
         <Image
           style={styles.tinyImage}
           source={{
-            uri: 'https://icons-for-free.com/iconfiles/png/512/gallery+image+landscape+mobile+museum+open+line+icon-1320183049020185924.png',
+            uri: imageUrl,
           }}
+          defaultSource={require('../assets/blank.png')}
+          accessibilityLabel="Article Photo"
         />
       </View>
       <View style={styles.secondaryView}>
@@ -46,7 +59,6 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 5,
-    // marginRight: 10,
   },
   secondaryView: {
     maxWidth: '75%',

@@ -7,7 +7,6 @@ import {
   Button,
   FlatList,
   StyleSheet,
-  Text,
   TextInput,
   TouchableHighlight,
   View,
@@ -68,7 +67,7 @@ const Home = ({ navigation }: { navigation: NavigationStackProp }) => {
       <TouchableHighlight style={styles.button}>
         <Button
           title="Search"
-          onPress={() => setPage(prevPage => prevPage + 1 - 1)}
+          onPress={() => setPage(0)}
           disabled={page ? false : true}
           color="#fff"
         />
