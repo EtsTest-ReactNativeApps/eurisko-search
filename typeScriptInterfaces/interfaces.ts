@@ -1,9 +1,3 @@
-export interface Data {
-  response: {
-    docs: [];
-  };
-}
-
 export interface LocalData
   extends Array<{
     _id: string;

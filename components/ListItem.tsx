@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { NavigationStackProp } from 'react-navigation-stack';
 import { Item } from '../typeScriptInterfaces/interfaces';
+import { shortString } from '../utils/shortString';
 
 const ListItem = ({
   item,
@@ -28,6 +29,7 @@ const ListItem = ({
   return (
     <TouchableOpacity style={styles.item} onPress={pressHandler}>
       <View>
+        {/* I wanted to use FastImage package, but it's not supported in Expo Go app that's been downloaded from the PlayStore and AppleStore. */}
         <Image
           style={styles.tinyImage}
           source={{
@@ -38,8 +40,8 @@ const ListItem = ({
         />
       </View>
       <View style={styles.secondaryView}>
-        <Text style={styles.title}>{item.headline.main}</Text>
-        <Text>{item['lead_paragraph']}</Text>
+        <Text style={styles.title}>{shortString(item.headline.main, 75)}</Text>
+        <Text>{shortString(item['lead_paragraph'], 100)}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -47,6 +49,7 @@ const ListItem = ({
 
 const styles = StyleSheet.create({
   item: {
+    height: 115,
     padding: 10,
     backgroundColor: '#fff',
     marginBottom: 10,
