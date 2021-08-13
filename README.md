@@ -30,19 +30,20 @@ To get a local copy up and running follow these simple example steps.
 - NodeJS
 - Code Editor
 - Expo Cli
-- Android Studio
+- TypeScript
+- Android Studio or Android device with an Expo Go app or iPhone device with an Expo Go app.
 
 ### Setup
 
 Open up a terminal (after installing Git) and run the following command:
 
-```
+```Git
   git clone https://github.com/martinnajjar12/eurisko-search.git
 ```
 
 and hit Enter.
 
-**OR**
+**OR:**
 
 Download a zip version of the project from [the GitHub Repo](https://github.com/martinnajjar12/eurisko-search).
 
@@ -50,23 +51,25 @@ Download a zip version of the project from [the GitHub Repo](https://github.com/
 
 To install the required dependencies run this command in your terminal:
 
-```
+```Node
   npm install
 ```
 
 ### Usage
 
-Open up the Android Studio application, then navigate to the AVD Manager and choose or create a device. Then Run it.
+Open up the Android Studio application, then navigate to the AVD Manager and choose or create a device. Then click on the play button to run that device.
 
 Once your virtual device is up and running, dispatch the following command in the root directory of your project:
 
-```
+```Node
   npm start
 ```
 
-Then navigate to the developer tools in the browser and click on `Run on Android Simulator`. Now you can see the app running on your virtual device.
+Then navigate to the developer tools in the browser and click on `Run on Android Device/Emulator`. Now you can see the app running on your virtual device.
 
-**Note:** You may not able to run this app on Expo Go app from the Play Store or Apple Store because I'm using Fast Image package which is not supported in that application.
+**OR:**
+
+If you have an Android or IOS device, install `Expo Go` from the store and run `npm start` in the root directory of your project, then open up the camera app in your device and locate the QR code to open the app.
 
 ## Authors
 
