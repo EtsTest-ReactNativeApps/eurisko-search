@@ -2,7 +2,7 @@
 
 > React Native application that helps the user look for news provided by the NYT APIs. It helps the user search for any topic, read the lead paragraph and share the article link.
 
-![screenshot](./src/assets/images/screenshot.jpg)
+![screenshot](./assets/screenshot.gif)
 
 <p>Screenshot</p>
 
@@ -13,12 +13,6 @@
 - React Native
 - Expo Client
 - React Navigation
-
-<!-- ## Tested With
-
-- Jest
-- redux-mock-store
-- moxios -->
 
 ## Features
 
@@ -74,14 +68,6 @@ Then navigate to the developer tools in the browser and click on `Run on Android
 
 **Note:** You may not able to run this app on Expo Go app from the Play Store or Apple Store because I'm using Fast Image package which is not supported in that application.
 
-<!-- ### Run tests
-
-To test the application please run this command:
-
-```
-  npm test
-``` -->
-
 ## Authors
 
 👤 **Martin Najjar**
@@ -104,6 +90,6 @@ Give a ⭐️ if you like this project!
 
 - App idea by [EuriskoMobility](https://euriskomobility.com/)
 
-<!-- ## 📝 License
+## 📝 License
 
-This project is [MIT](https://github.com/martinnajjar12/calories-frontend/blob/development/LICENSE) licensed. -->
+This project is [MIT](https://github.com/martinnajjar12/eurisko-search/blob/search-feature/LICENSE) licensed.
