@@ -1,4 +1,4 @@
-/*eslint camelcase: ["error", {allow: ["lead_paragraph", "web_url", "type_of_material"]}]*/
+/* eslint camelcase: ["error", {allow: ["lead_paragraph", "web_url", "type_of_material"]}] */
 
 export interface LocalData
   extends Array<{

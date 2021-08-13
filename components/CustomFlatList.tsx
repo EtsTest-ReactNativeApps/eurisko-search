@@ -2,9 +2,9 @@ import React, { memo } from 'react';
 import 'react-native-get-random-values';
 import { NavigationStackProp } from 'react-navigation-stack';
 import { FlatList } from 'react-native';
+import { nanoid } from 'nanoid';
 import { Item, LocalData } from '../typeScriptInterfaces/interfaces';
 import ListItem from './ListItem';
-import { nanoid } from 'nanoid';
 
 const CustomFlatList = ({
   localData,
