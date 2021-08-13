@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1acae95a-31fd-438d-9242-e8470d7d8d4b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/components/CustomFlatList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/CustomFlatList.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/ListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ListItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/typeScriptInterfaces/interfaces.ts" beforeDir="false" afterPath="$PROJECT_DIR$/typeScriptInterfaces/interfaces.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Home.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,10 +37,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="360" y="120" width="1200" height="800" key="AVDManager" timestamp="1628848798664">
+    <state x="360" y="120" width="1200" height="800" key="AVDManager" timestamp="1628855501136">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="360" y="120" width="1200" height="800" key="AVDManager/0.0.1920.1040@0.0.1920.1040" timestamp="1628848798664" />
+    <state x="360" y="120" width="1200" height="800" key="AVDManager/0.0.1920.1040@0.0.1920.1040" timestamp="1628855501136" />
     <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1628847174168">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

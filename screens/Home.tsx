@@ -1,13 +1,7 @@
-import axios from 'axios';
+import axios, { CancelTokenSource } from 'axios';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { StyleSheet, TextInput, View } from 'react-native';
 import { NavigationStackProp } from 'react-navigation-stack';
 import { LocalData } from '../typeScriptInterfaces/interfaces';
 import CustomFlatList from '../components/CustomFlatList';
@@ -50,24 +44,28 @@ const Home = ({ navigation }: { navigation: NavigationStackProp }) => {
   };
 
   useEffect(() => {
-    fetchTwoRequests();
-    // I'm not using a clear method here because it will be useless
-  }, [page]);
+    const timeoutToFetchData: ReturnType<typeof setTimeout> = setTimeout(
+      () => fetchTwoRequests(),
+      1000,
+    );
+
+    // Cancel the request if the user is still typing
+    return () => {
+      clearTimeout(timeoutToFetchData);
+    };
+  }, [page, text]);
 
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        onChangeText={text => setText(text)}
+        onChangeText={text => {
+          setPage(0);
+          setText(text);
+        }}
         value={text}
         placeholder="Search"
       />
-      <TouchableOpacity
-        onPress={() => (page ? setPage(0) : fetchTwoRequests())}
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>Search</Text>
-      </TouchableOpacity>
       <CustomFlatList
         setPage={setPage}
         localData={localData}
@@ -89,19 +87,6 @@ const styles = StyleSheet.create({
     padding: 18,
     borderWidth: 1,
     backgroundColor: '#fff',
-  },
-  button: {
-    marginTop: 10,
-    borderRadius: 4,
-    backgroundColor: '#3f51b5',
-    width: '95%',
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 20,
   },
 });
 

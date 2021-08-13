@@ -29,7 +29,8 @@ const ListItem = ({
   return (
     <TouchableOpacity style={styles.item} onPress={pressHandler}>
       <View>
-        {/* I wanted to use FastImage package, but it's not supported in Expo Go app that's been downloaded from the PlayStore and AppleStore. */}
+        {/* I wanted to use FastImage package, but it's not supported in Expo Go app that's been downloaded from the PlayStore and AppleStore.
+          Another solution would be using a thumbnail instead of a large photo */}
         <Image
           style={styles.tinyImage}
           source={{
