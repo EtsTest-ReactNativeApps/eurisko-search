@@ -1,18 +1,14 @@
 import axios from 'axios';
-import 'react-native-get-random-values';
-import { nanoid } from 'nanoid';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import {
-  Button,
-  FlatList,
   StyleSheet,
+  Text,
   TextInput,
-  TouchableHighlight,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import { NavigationStackProp } from 'react-navigation-stack';
-import ListItem from '../components/ListItem';
 import { LocalData } from '../typeScriptInterfaces/interfaces';
 import CustomFlatList from '../components/CustomFlatList';
 
@@ -55,6 +51,7 @@ const Home = ({ navigation }: { navigation: NavigationStackProp }) => {
 
   useEffect(() => {
     fetchTwoRequests();
+    // I'm not using a clear method here because it will be useless
   }, [page]);
 
   return (
@@ -65,14 +62,12 @@ const Home = ({ navigation }: { navigation: NavigationStackProp }) => {
         value={text}
         placeholder="Search"
       />
-      <TouchableHighlight style={styles.button}>
-        <Button
-          title="Search"
-          onPress={() => setPage(0)}
-          disabled={page ? false : true}
-          color="#fff"
-        />
-      </TouchableHighlight>
+      <TouchableOpacity
+        onPress={() => (page ? setPage(0) : fetchTwoRequests())}
+        style={styles.button}
+      >
+        <Text style={styles.buttonText}>Search</Text>
+      </TouchableOpacity>
       <CustomFlatList
         setPage={setPage}
         localData={localData}
@@ -102,6 +97,11 @@ const styles = StyleSheet.create({
     width: '95%',
     height: 50,
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 20,
   },
 });
 

@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import 'react-native-get-random-values';
 import { NavigationStackProp } from 'react-navigation-stack';
 import { FlatList } from 'react-native';
 import { Item, LocalData } from '../typeScriptInterfaces/interfaces';
